@@ -29,7 +29,7 @@ def plot_surface(func, x_domain, y_domain):
     ax = fig.add_subplot(111, projection='3d')
     ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.8)
     
-    ax.set_title(f'Surface plot of the function: {sp.pretty(func)}')
+    # ax.set_title(f'Surface plot of the function: {sp.pretty(func)}')
     ax.set_xlabel('X axis')
     ax.set_ylabel('Y axis')
     ax.set_zlabel('Z axis')
@@ -78,7 +78,7 @@ def plot_surface_with_gradients(func, x_domain, y_domain, points):
                   unit_vector[0], unit_vector[1], 0,
                   color='r', length=1, normalize=True)
 
-    ax.set_title(f'Surface plot of the function with Gradient Vectors')
+    # ax.set_title(f'Surface plot of the function with Gradient Vectors')
     ax.set_xlabel('X axis')
     ax.set_ylabel('Y axis')
     ax.set_zlabel('Z axis')
