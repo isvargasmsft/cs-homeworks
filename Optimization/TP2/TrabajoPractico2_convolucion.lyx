@@ -1,0 +1,574 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{palatino}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style swiss
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Trabajo Práctico: Matrices y Convolucion
+\end_layout
+
+\begin_layout Author
+Ph.
+ D.
+ Saúl Calderón Ramírez 
+\begin_inset Newline newline
+\end_inset
+
+Instituto Tecnológico de Costa Rica, 
+\begin_inset Newline newline
+\end_inset
+
+Escuela de Computación, bachillerato en Ingeniería en Computación,
+\begin_inset Newline newline
+\end_inset
+
+PAttern Recongition and MAchine Learning Group (PARMA-Group)
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Fecha de entrega:
+\series default
+ Jueves 3 de Octubre
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Entrega
+\series default
+: Un archivo .zip con el código fuente LaTeX o Lyx, el pdf, y un script de
+ Jupyter, debidamente documentado, con una función definida por ejercicio.
+ A través del TEC-digital.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Modo de trabajo
+\series default
+: Grupos de 3 personas.
+\end_layout
+
+\begin_layout Abstract
+En el presente trabajo practico el estudiante implementará distintos filtros
+ lineales y no lineales.
+ 
+\end_layout
+
+\begin_layout Section
+(30 puntos) Implementación del algoritmo Bilinear para el aumentado de tamaño
+ de una imagen
+\end_layout
+
+\begin_layout Standard
+Para una imagen 
+\begin_inset Formula $U\in\mathbb{R}^{n\times m}$
+\end_inset
+
+, muy frecuentemente necesitamos crear una imagen nueva de mayor tamaño
+ 
+\begin_inset Formula $U'\in\mathbb{R}^{n'\times m'}$
+\end_inset
+
+ donde 
+\begin_inset Formula $n'=\alpha n$
+\end_inset
+
+ y 
+\begin_inset Formula $m'=\alpha m$
+\end_inset
+
+, con 
+\begin_inset Formula $\alpha\in\mathbb{N}$
+\end_inset
+
+ un escalar de aumentado de la imagen (por lo que entonces 
+\begin_inset Formula $\alpha>1$
+\end_inset
+
+).
+ Tomese la ilustracion de la siguiente matriz donde se tienen distintos
+ valores de una matriz 
+\begin_inset Formula $U\in\mathbb{R}^{3\times3}$
+\end_inset
+
+ de ejemplo:
+\begin_inset Formula 
+\[
+U=\begin{bmatrix}1 & 5 & 7\\
+3 & 1 & 2\\
+2 & 1 & 5
+\end{bmatrix}
+\]
+
+\end_inset
+
+suponiendo por ejemplo un 
+\begin_inset Formula $\alpha=2$
+\end_inset
+
+ para el aumentado de tamaño, tendriamos entonces como resultado una matriz
+ 
+\begin_inset Formula $U'\in\mathbb{R}^{6\times6}$
+\end_inset
+
+, donde conocemos la mitad de los valores de los pixeles:
+\begin_inset Formula 
+\[
+U=\begin{bmatrix}1 & ? & 5 & ? & 7 & ?\\
+? & ? & ? & ? & ? & ?\\
+3 & ? & 1 & ? & 2 & ?\\
+? & ? & ? & ? & ? & ?\\
+2 & ? & 1 & ? & 5 & ?\\
+? & ? & ? & ? & ? & ?
+\end{bmatrix}
+\]
+
+\end_inset
+
+Cómo podemos estimar los valores faltantes (con signo de pregunta) con estimacio
+nes adecuadas? Existen muchos algoritmos para hacerlo, a estos algoritmos
+ se les llama 
+\series bold
+algoritmos de interpolación.
+ 
+\series default
+La Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Tipos-de-interpolación"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ muestra varios algoritmos de interpolación tanto para señales 1D como para
+ 2D.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imgs/procimagenes.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\lang english
+Tipos de interpolación para cambio de tamaño de imágenes.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Tipos-de-interpolación"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La interpolación bilineal se puede implementar con distintas variantes.
+ La Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Diagrama-ilustrativo-de"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ muestra la que se propone implementar, donde se toman solamente 3 puntos
+ para calcular la ecuación del plano.
+ En tal figura los puntos negros son valores nulos por estimar o ya estimados,
+ los azules son conocidos de la imagen original y el naranja representa
+ el punto que actualmente se está por estimar.
+ Los valores 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ y 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+ son las coordenadas de los pixeles y el valor 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+ la intensidad de gris, de modo que el plano puede modelarse como 
+\begin_inset Formula $z_{i}=f\left(x_{i},y_{i}\right)$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imgs/interpol.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Diagrama ilustrativo de interpolación bilineal con 3 puntos.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Diagrama-ilustrativo-de"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Defina como estimar al punto naranja 
+\begin_inset Formula $P_{n}$
+\end_inset
+
+ suponiendo que interpola un plano que pase por los puntos 
+\begin_inset Formula $P_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $P_{2}$
+\end_inset
+
+ y 
+\begin_inset Formula $P_{3}$
+\end_inset
+
+.
+ Muestre las ecuaciones y pasos intermedios para llegar alli.
+ Exprese el sistema de ecuaciones de forma matricial.
+\end_layout
+
+\begin_layout Itemize
+Implemente tal metodo para cambiar el tamaño de una imagen.
+\end_layout
+
+\begin_layout Itemize
+Pruebelo con una imagen de su preferencia con resolucion de 
+\begin_inset Formula $1024\times768$
+\end_inset
+
+ usando y muestre los resultados:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\alpha=2$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\alpha=3$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+(10 puntos) Propiedades de la convolucion
+\end_layout
+
+\begin_layout Standard
+Para las siguientes demostraciones, puede usar funciones discretas o continuas.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Demuestre que para el siguiente sistema basado en la convolución es lineal:
+\begin_inset Formula 
+\[
+\mathcal{L}\left(u\left(x\right)\right)=u\left(x\right)*f\left(x\right)
+\]
+
+\end_inset
+
+donde la funcion 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+ es una funcion conocida cualquiera.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Muestre numericamente, con funciones 
+\begin_inset Formula $u\left(x\right)$
+\end_inset
+
+ y 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+ definidas por usted, la linealidad de ser posible.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Demuestre la propiedad de la asociatividad: 
+\begin_inset Formula 
+\[
+g\left(x\right)*\left(h_{1}\left(x\right)*h_{2}\left(x\right)\right)=\left(g\left(x\right)*h_{1}\left(x\right)\right)*h_{2}\left(x\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Muestre el cumplimiento de tal propiedad numericamente con 
+\begin_inset Formula $N$
+\end_inset
+
+ funciones generadas al azar.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Demuestre la siguiente propiedad: 
+\begin_inset Formula $g\left(x\right)*\left(\delta\left(x\right)+k\delta\left(x+s\right)\right)=g\left(x\right)+kg\left(x-s\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+(60 puntos) Convolucion: Filtros para la eliminación de ruido y mejora de
+ imágenes (30 puntos)
+\end_layout
+
+\begin_layout Enumerate
+Para las 3 imágenes provistas contaminelas para generar los siguientes conjuntos
+ de imágenes contaminadas:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Imágenes contaminadas con ruido Gaussiano:
+\series default
+ Contamine las imágenes para generar dos escenarios: imágenes con poca contamina
+ción y alta contaminación.
+ Elija los parámetros de ruido y documente los resultados.
+ Documente el PSNR para todas las imágenes, y el PSNR promedio para cada
+ tipo de ruido.
+ Comente los resultados.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Imágenes contaminadas con ruido Sal y Pimienta:
+\series default
+ Contamine las imágenes para generar dos escenarios: imágenes con poca contamina
+ción y alta contaminación.
+ Elija los parámetros de ruido y documente los resultados.Documente el PSNR
+ para todas las imágenes, y el PSNR promedio para cada tipo de ruido.
+ Comente los resultados.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Implemente el filtro Gaussiano
+\series default
+: Implemente el filtro Gaussiano con 
+\begin_inset Formula $\sigma=\frac{N-1}{3}$
+\end_inset
+
+ la desviacion estandar del kernel y 
+\begin_inset Formula $N$
+\end_inset
+
+ el tamaño de la ventana.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Utilice 2 valores distintos de tamaño de la ventana 
+\begin_inset Formula $N\times N$
+\end_inset
+
+, 
+\begin_inset Formula $N=3$
+\end_inset
+
+ y 
+\begin_inset Formula $N=11$
+\end_inset
+
+ para filtrar los tres conjuntos de imágenes con los 2 escenarios.
+ Documente los resultados y coméntelos.
+ Cual es el efecto del tamaño del filtro?
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Implemente el filtro de Unsharp Masking: 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Para las imágenes originales calibre los parámetros del filtro, y reporte
+ los resultados cualitativos para al menos 3 sets de parámetros diferentes.
+ Comente los resultados y los efectos observados.
+ Utilice al menos 3 valores de 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ diferentes.
+\end_layout
+
+\begin_layout Enumerate
+Para los mismos parámetros probados, filtre las imágenes con ruido en los
+ 2 escenarios para los 2 tipos de ruido.
+ Comente los resultados, qué sucede cuando existe ruido en la imagen? Utilice
+ al menos 3 valores de 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ diferentes.
+\end_layout
+
+\end_deeper
+\end_body
+\end_document
