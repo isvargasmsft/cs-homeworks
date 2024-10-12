@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+numpy = "*"
+matplotlib = "*"
+optuna = "*"
+torch = "*"
+plotly = "*"
+seaborn = "*"
+
+[dev-packages]
+jupyter = "*"
+notebook = "*"
+
+[requires]
+python_version = "3.12"

@@ -1,0 +1,488 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{palatino}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize letterpaper
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 3cm
+\rightmargin 2cm
+\bottommargin 3cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style swiss
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Trabajo práctico: Optimización 
+\end_layout
+
+\begin_layout Author
+Ph.
+ D.
+ Saúl Calderón Ramírez 
+\begin_inset Newline newline
+\end_inset
+
+Instituto Tecnológico de Costa Rica, 
+\begin_inset Newline newline
+\end_inset
+
+Escuela de Ingeniería en Computación, 
+\begin_inset Newline newline
+\end_inset
+
+PAttern Recognition and MAchine Learning Group (PARMA-Group)
+\end_layout
+
+\begin_layout Standard
+El presente proyecto trata sobre la implementación en pytorch de distintos
+ algoritmos de optimización.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Fecha de entrega: Lunes 21 de Octubre
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Modo de trabajo
+\series default
+: Grupo de tres/dos personas.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Tipo de entrega:
+\series default
+ digital, por medio de la plataforma TEC-digital.
+\end_layout
+
+\begin_layout Standard
+Para la documentación externa de este proyecto, incluya la explicación de
+ cada método, y al menos 2 pruebas unitarias debidamente documentadas por
+ cada uno.
+ Para la documentación interna utilice un estándar de Doxygen 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://tinyurl.com/55hxcd7r
+\end_layout
+
+\end_inset
+
+.
+ La documentación externa debe realizarse en un documento pdf generado por
+ latex, y la implementación debe entregarse en un notebook de jupyter.
+ 
+\end_layout
+
+\begin_layout Section
+Optimización de funciones
+\end_layout
+
+\begin_layout Standard
+Para las siguientes funciones:
+\begin_inset Formula 
+\[
+f_{0}\left(x,y\right)=x^{2}+y^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f_{1}\left(x,y\right)=\left(1.5-x+xy\right)^{2}+\left(2.25-x+xy^{2}\right)^{2}+\left(2.625-x+xy^{3}\right)^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f_{2}\left(x,y\right)=0.26\left(x^{2}+y^{2}\right)-0.48xy
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+con 
+\begin_inset Formula $x_{1},x_{2}\in\left[-10,10\right]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Para todos los algoritmos, ejecutelos por 
+\begin_inset Formula $P=25$
+\end_inset
+
+ iteraciones e inicialice las soluciones en el rango 
+\begin_inset Formula $x_{1},x_{2}\in\left[-10,10\right]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+(20 puntos)
+\series default
+ Según tales gráficas, grafique las funciones usando la función 
+\emph on
+meshgrid 
+\emph default
+y
+\emph on
+ contour, y 
+\emph default
+distinga si las funciones son convexas o no, y los puntos mínimos y regiones
+ o puntos silla.
+\begin_inset Note Note
+status open
+
+\begin_layout Enumerate
+
+\series bold
+(30 puntos)
+\series default
+ Implemente
+\series bold
+ 
+\series default
+el algoritmo de
+\series bold
+ Newton Raphson
+\series default
+ para encontrar el punto mínimo en pytorch, de la forma mas vectorial posible.
+ Implemente las siguientes pruebas.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Calibre los hiper-parámetros del algoritmo usando 
+\emph on
+optuna
+\emph default
+ , mostrando el proceso de calibrado usando las gráficas de aprendizaje
+ , y reporte los mejores valores encontrados.
+ Ello para las tres funciones a optimizar.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Muestre las graficas de calibración generadas por optuna.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Para los mejores valores encontrados, en cada funcion, por un maximo de
+ 25 iteraciones:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Ejecute el algoritmo 10 corridas diferentes, y documente en una tabla la
+ cantidad de iteraciones para converger a el o los puntos minimos (indique
+ si convergió).
+ Los 
+\series bold
+10 puntos iniciales escogidos deben preservarse para todos los algoritmos
+ a probar
+\series default
+.
+\end_layout
+
+\begin_layout Enumerate
+Muestre el valor promedio del punto minimo para las 10 corridas, y la cantidad
+ de iteraciones promedio en converger.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Muestre los puntos visitados del algoritmo para la mejor corrida (convergencia
+ mas rapida) para cada función.
+ Para ello use el gráfico de las curvas de nivel.
+ Además para tales corridas, grafique la curva de aprendizaje.
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+(40 puntos)
+\series default
+ Implemente
+\series bold
+ 
+\series default
+el algoritmo del
+\series bold
+ RMS prop.
+
+\series default
+ para encontrar el punto mínimo en pytorch, de la forma mas vectorial posible.
+ Implemente las siguientes pruebas.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Para cada funcion, calibre los hiper-parámetros del algoritmo, mostrando
+ el proceso de calibrado usando las gráficas de aprendizaje , y reporte
+ los mejores valores encontrados.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Realice el proceso de calibración usando un framework como optuna 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://optuna.org/
+\end_layout
+
+\end_inset
+
+ o weights and biases 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://wandb.ai/site
+\end_layout
+
+\end_inset
+
+.
+ Reporte los mejores valores encontrados.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Realice lo anterior para el algoritmo del descenso del gradiente.
+ 
+\end_layout
+
+\begin_layout Enumerate
+¿Porqué el algoritmo RMS prop es más efectivo en evitar atascarse en puntos
+ silla que el algoritmo del descenso del gradiente?
+\end_layout
+
+\begin_layout Enumerate
+Para los mejores valores encontrados, en cada funcion, por un maximo de
+ 25 iteraciones (para el algoritmo del descenso del gradiente, y RMS prop):
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Ejecute el algoritmo 10 corridas diferentes, y documente en una tabla la
+ cantidad de iteraciones para converger a el o los puntos minimos (indique
+ si convergió).
+ 
+\end_layout
+
+\begin_layout Enumerate
+Muestre el valor promedio de la función minimizada para las 10 corridas,
+ y la cantidad de iteraciones promedio en converger.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Muestre los puntos visitados del algoritmo para la mejor corrida (convergencia
+ mas rapida) para cada función.
+ Para ello use el gráfico de las curvas de nivel.
+ Además para tales corridas, grafique la curva de aprendizaje.
+\end_layout
+
+\begin_layout Enumerate
+Realice una comparativa entre el algoritmo del descenso del gradiente y
+ el algoritmo RMS prop.
+ según los resultados obtenidos.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+(
+\series bold
+30 puntos
+\series default
+) Implemente el algoritmo de
+\series bold
+ simulated annealing 
+\series default
+en pytorch, de la forma mas vectorial posible
+\series bold
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Realice un proceso de calibración de sus hiper-parámetros y reporte los
+ mejores valores encontrados, usando como evidencia las gráficas de aprendizaje
+ de los mejores hiper-parámetros encontrados.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Para los mejores valores encontrados, en cada funcion, por un maximo de
+ 25 iteraciones (para el algoritmo del descenso del gradiente, y el descenso
+ del gradiente adaptativo):
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Ejecute el algoritmo 10 corridas diferentes, y documente en una tabla la
+ cantidad de iteraciones para converger a el o los puntos minimos (indique
+ si convergió).
+ Los 
+\series bold
+10 puntos iniciales escogidos deben preservarse para todos los algoritmos
+ a probar
+\series default
+ (deben ser los mismos que el 
+\series bold
+descenso del gradiente y el descenso del gradiente adaptativo
+\series default
+).
+\end_layout
+
+\begin_layout Enumerate
+Muestre el valor promedio de la función minimizada para las 10 corridas,
+ y la cantidad de iteraciones promedio en converger.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Muestre los puntos visitados del algoritmo para la mejor corrida (convergencia
+ mas rapida) para cada función.
+ Para ello use el gráfico de las curvas de nivel.
+ Además para tales corridas, grafique la curva de aprendizaje.
+\end_layout
+
+\begin_layout Enumerate
+¿Cómo podría mezclar el algoritmo del descenso del gradiente con el algoritmo
+ de 
+\emph on
+simulated annealing? 
+\emph default
+¿Qué beneficios tendría el hacerlo?
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+(10 puntos)
+\series default
+ Compare los resultados de todos los algoritmos probados, y argumente las
+ ventajas y desventajas de cada uno, usando fuentes externas debidamente
+ citadas.
+ 
+\end_layout
+
+\end_body
+\end_document
